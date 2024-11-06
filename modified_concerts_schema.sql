@@ -63,3 +63,6 @@ CREATE TABLE favourite_artist (
   fan_id INTEGER(10),
   favourite_artist_id INTEGER(10)
 );
+
+
+#TEST MESSAGE 2
