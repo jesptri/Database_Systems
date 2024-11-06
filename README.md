@@ -1,4 +1,4 @@
-# CS4416 Database Systems-Project
+# CS4416 - Database Systems
 
 I followed this module during my Erasmus semester (Sep 2024 - Dec 2024) at the University of Limerick. The project is part of the final evaluation.
 
