@@ -64,4 +64,5 @@ CREATE TABLE favourite_artist (
   favourite_artist_id INTEGER(10)
 );
 
-#TEST GIT
+
+#TEST MESSAGE 2
