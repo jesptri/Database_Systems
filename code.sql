@@ -1,15 +1,15 @@
 -- 3. Create a view for the modified schema. The view must use a join and both GROUP BY and HAVING clauses. Aim at demonstrating advanced SQL skills.
 
-CREATE VIEW concerts_summary AS
+CREATE VIEW concerts_over_one_thousand_places_summary AS
 SELECT c.concert_title, COUNT(csl.song_id) AS total_songs_performed, SUM(s.length) AS total_time, COUNT(DISTINCT ct.ticket_id) AS total_places_sold
 FROM concerts AS c
 JOIN artist_concerts_link AS acl ON c.concert_id = acl.concert_id
 JOIN concerts_songs_link AS csl ON c.concert_id = csl.concert_id
 JOIN songs AS s ON csl.song_id = s.song_id
 JOIN concerts_tickets AS ct on c.concert_id = ct.concert_id
-GROUP BY
-	c.concert_title
-HAVING COUNT(csl.song_id > 3);
+GROUP BY c.concert_title
+HAVING COUNT(total_places_sold > 1000)
+ORDER BY total_places_sold;
 
 -- 4. Write one BEFORE and one AFTER trigger for the modified schema. 
 
@@ -20,7 +20,7 @@ BEFORE INSERT ON fans
 FOR EACH ROW BEGIN
 	IF NEW.age < 0 THEN
     	SIGNAL SQLSTATE '45000' # unhandled user-defined exception
-        SET MESSAGE_TEXT = 'Fans must be at least 18 years old';
+        SET MESSAGE_TEXT = 'Fans must be at least 0 years old';
 	END IF;
 END;
 
