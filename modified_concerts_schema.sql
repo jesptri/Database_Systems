@@ -96,3 +96,7 @@ CREATE TABLE fan_tickets_link (
     FOREIGN KEY (fan_id) REFERENCES fans(fan_id),
     FOREIGN KEY (ticket_id) REFERENCES concerts_tickets(ticket_id)
 );
+
+---------------------------------------------------------
+-- /!\ Need to add a link between songs and albums /!\ --
+---------------------------------------------------------
