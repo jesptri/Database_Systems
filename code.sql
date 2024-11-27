@@ -1,19 +1,7 @@
 -- 3. Create a view for the modified schema. The view must use a join and both GROUP BY and HAVING clauses. Aim at demonstrating advanced SQL skills.
 
-CREATE VIEW artist_concert_summary AS
-SELECT a.artist_name, c.concert_title, COUNT(csl.song_id) AS total_songs_performed
-FROM artists AS a
-JOIN artist_concerts_link AS acl ON a.artist_id = acl.artist_id
-JOIN concerts AS c ON acl.concert_id = c.concert_id
-JOIN concerts_songs_link AS csl ON c.concert_id = csl.concert_id
-GROUP BY
-	a.artist_name, c.concert_title
-HAVING COUNT(csl.song_id > 3);
-
--- 3. Second proposition
-
 CREATE VIEW concerts_summary AS
-SELECT c.concert_title, COUNT(csl.song_id) AS total_songs_performed, SUM(s.length) AS total_time, COUNT(ct.ticket_id) AS total_places_sold
+SELECT c.concert_title, COUNT(csl.song_id) AS total_songs_performed, SUM(s.length) AS total_time, COUNT(DISTINCT ct.ticket_id) AS total_places_sold
 FROM concerts AS c
 JOIN artist_concerts_link AS acl ON c.concert_id = acl.concert_id
 JOIN concerts_songs_link AS csl ON c.concert_id = csl.concert_id
