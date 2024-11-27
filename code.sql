@@ -31,16 +31,18 @@ DELIMITER;
 
 DELIMITER //
 
-CREATE TRIGGER favorite_artist_update
-AFTER INSERT ON fan_favorites
-FOR EACH ROW BEGIN
-	UPDATE artists
-    SET genre = CONCAT(genre, ' (Fan Favorite)')
-    WHERE artist_id = NEW.artist_id AND NOT FIND_IN_SET('(Fan Favorite)', genre);
+CREATE TRIGGER fan_deletion
+BEFORE DELETE ON fans
+FOR EACH ROW 
+BEGIN
+    DELETE FROM fan_tickets_link 
+    WHERE fan_id = OLD.fan_id;
+    DELETE FROM fan_favorites 
+    WHERE fan_id = OLD.fan_id;
 END;
-
 //
-DELIMITER;
+
+DELIMITER ;
 
 -- 5. Write a stored function that returns the total number of occupied seats for a given concert_id.
 
