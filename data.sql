@@ -1,3 +1,96 @@
+CREATE TABLE artists (
+    artist_id INT PRIMARY KEY,
+    artist_name VARCHAR(100),
+    genre VARCHAR(50),
+    debut_year INT
+);
+
+CREATE TABLE albums (
+    album_id INT PRIMARY KEY,
+    album_title VARCHAR(100),
+    release_date DATE
+);
+
+CREATE TABLE songs (
+    song_id INT PRIMARY KEY,
+    song_title VARCHAR(100),
+    length INT,
+    release_date DATE
+);
+
+CREATE TABLE artist_albums_link (
+    artist_id INT,
+    album_id INT,
+    PRIMARY KEY (artist_id, album_id),
+    FOREIGN KEY (artist_id) REFERENCES artists(artist_id),
+    FOREIGN KEY (album_id) REFERENCES albums(album_id)
+);
+
+CREATE TABLE artists_songs_link (
+    artist_id INT,
+    song_id INT,
+    PRIMARY KEY (artist_id, song_id),
+    FOREIGN KEY (artist_id) REFERENCES artists(artist_id),
+    FOREIGN KEY (song_id) REFERENCES songs(song_id)
+);
+
+CREATE TABLE concerts (
+    concert_id INT PRIMARY KEY,
+    concert_title VARCHAR(100),
+    location VARCHAR(100),
+    date_of_concert DATE
+);
+
+CREATE TABLE artist_concerts_link (
+    artist_id INT,
+    concert_id INT,
+    PRIMARY KEY (artist_id, concert_id),
+    FOREIGN KEY (artist_id) REFERENCES artists(artist_id),
+    FOREIGN KEY (concert_id) REFERENCES concerts(concert_id)
+);
+
+CREATE TABLE concerts_songs_link (
+    concert_id INT,
+    song_id INT,
+    order_performance INT,
+    PRIMARY KEY (concert_id, song_id),
+    FOREIGN KEY (concert_id) REFERENCES concerts(concert_id),
+    FOREIGN KEY (song_id) REFERENCES songs(song_id)
+);
+
+CREATE TABLE fans (
+    fan_id INT PRIMARY KEY,
+    fan_name VARCHAR(100),
+    fan_email VARCHAR(100),
+    age INT
+);
+
+CREATE TABLE fan_favorites (
+    fan_id INT,
+    artist_id INT,
+    PRIMARY KEY (fan_id, artist_id),
+    FOREIGN KEY (fan_id) REFERENCES fans(fan_id),
+    FOREIGN KEY (artist_id) REFERENCES artists(artist_id)
+);
+
+CREATE TABLE concerts_tickets (
+    ticket_id INT PRIMARY KEY,
+    concert_id INT,
+    purchase_date DATE,
+    ticket_price DECIMAL(10, 2),
+    seat_zone VARCHAR(50),
+    seat_number VARCHAR(50),
+    FOREIGN KEY (concert_id) REFERENCES concerts(concert_id)
+);
+
+CREATE TABLE fan_tickets_link (
+    fan_id INT,
+    ticket_id INT,
+    PRIMARY KEY (fan_id, ticket_id),
+    FOREIGN KEY (fan_id) REFERENCES fans(fan_id),
+    FOREIGN KEY (ticket_id) REFERENCES concerts_tickets(ticket_id)
+);
+
 INSERT INTO artists (artist_id, artist_name, genre, debut_year) 
 VALUES 
 (1, 'Avicii', 'EDM', 2008),
@@ -10,24 +103,24 @@ VALUES
 
 INSERT INTO songs (song_id, song_title, length, release_date)
 VALUES 
-(1, 'Wake Me Up', 4.09, '2013-06-17'),
-(3, 'Hey Brother', 4.14, '2013-09-13'),
-(4, 'Addicted to You', 2.31, '2013-09-13'),
-(5, 'Dear Boy', 3.47, '2013-09-13'),
-(6, 'Liar Liar', 3.17, '2013-09-13'),
-(7, 'Shame on Me', 4.11, '2013-09-13'),
-(8, 'Lay Me Down', 4.22, '2013-09-13'),
-(9, 'Dancing in My Head', 3.59, '2013-09-13'),
-(11, 'Born in the U.S.A.', 4.42, '1984-05-04'),
-(12, 'Darlington County', 4.50, '1984-06-04'),
-(13, 'Working on the Highway', 3.12, '1984-06-04'),
-(14, 'I\'m on Fire', 2.38, '1984-06-04'),
-(15, 'No Surrender', 4.03, '1984-06-04'),
-(16, 'Bobby Jean', 4.30, '1984-06-04'),
-(17, 'I\'m Goin\' Down', 3.30, '1984-06-04'),
-(18, 'Glory Days', 4.17, '1984-06-04'),
-(19, 'Dancing in the Dark', 4.02, '1984-06-04'),
-(20, 'My Hometown', 4.33, '1984-06-04');
+(1, 'Wake Me Up', 272, '2013-06-17'),
+(3, 'Hey Brother', 254, '2013-09-13'),
+(4, 'Addicted to You', 151, '2013-09-13'),
+(5, 'Dear Boy', 257, '2013-09-13'),
+(6, 'Liar Liar', 208, '2013-09-13'),
+(7, 'Shame on Me', 253, '2013-09-13'),
+(8, 'Lay Me Down', 262, '2013-09-13'),
+(9, 'Dancing in My Head', 239, '2013-09-13'),
+(11, 'Born in the U.S.A.', 282, '1984-05-04'),
+(12, 'Darlington County', 290, '1984-06-04'),
+(13, 'Working on the Highway', 192, '1984-06-04'),
+(14, 'I\'m on Fire', 158, '1984-06-04'),
+(15, 'No Surrender', 243, '1984-06-04'),
+(16, 'Bobby Jean', 270, '1984-06-04'),
+(17, 'I\'m Goin\' Down', 210, '1984-06-04'),
+(18, 'Glory Days', 257, '1984-06-04'),
+(19, 'Dancing in the Dark', 242, '1984-06-04'),
+(20, 'My Hometown', 273, '1984-06-04');
 
 INSERT INTO artist_albums_link (artist_id, album_id) 
 VALUES 
@@ -78,3 +171,53 @@ INSERT INTO fan_tickets_link (fan_id, ticket_id)
 VALUES 
 (1, 1),
 (2, 2);
+
+INSERT INTO fans (fan_id, fan_name, fan_email, age)
+VALUES 
+(5, 'John Doe', 'john.doe@example.com', 25),
+(6, 'Jane Smith', 'jane.smith@example.com', 22),
+(7, 'Emily Clark', 'emily.clark@example.com', 30),
+(8, 'James Johnson', 'james.johnson@example.com', 28),
+(9, 'Alice Brown', 'alice.brown@example.com', 26),
+(10, 'David Wilson', 'david.wilson@example.com', 24),
+(11, 'Chris Lee', 'chris.lee@example.com', 21),
+(12, 'Michael Green', 'michael.green@example.com', 33),
+(13, 'Sarah Adams', 'sarah.adams@example.com', 27),
+(14, 'Tom Harris', 'tom.harris@example.com', 35),
+(15, 'Kate Miller', 'kate.miller@example.com', 23),
+(16, 'Laura Lewis', 'laura.lewis@example.com', 29),
+(17, 'Mark Walker', 'mark.walker@example.com', 32),
+(18, 'Paul Young', 'paul.young@example.com', 20),
+(19, 'Sophie King', 'sophie.king@example.com', 31);
+
+INSERT INTO fan_favorites (fan_id, artist_id)
+VALUES 
+(5, 1), (6, 2), (7, 1), (8, 2), (9, 1), (10, 2),
+(11, 1), (12, 2), (13, 1), (14, 2), (15, 1), 
+(16, 2), (17, 1), (18, 2), (19, 1);
+
+INSERT INTO concerts_tickets (ticket_id, concert_id, purchase_date, ticket_price, seat_zone, seat_number)
+VALUES 
+(3, 1, '2014-06-20', 75.50, 'Section1', 'A13'),
+(4, 1, '2014-06-25', 75.50, 'Section1', 'A14'),
+(5, 1, '2014-07-01', 75.50, 'Section2', 'B10'),
+(6, 2, '1985-09-05', 80.00, 'Section2', 'B12'),
+(7, 2, '1985-09-10', 80.00, 'Section3', 'C11'),
+(8, 2, '1985-09-15', 80.00, 'Section1', 'A11'),
+(9, 1, '2014-07-05', 75.50, 'Section2', 'B13'),
+(10, 1, '2014-07-08', 75.50, 'Section3', 'C12'),
+(11, 2, '1985-09-18', 80.00, 'Section3', 'C13'),
+(12, 2, '1985-09-20', 80.00, 'Section2', 'B14');
+
+INSERT INTO fan_tickets_link (fan_id, ticket_id)
+VALUES 
+(5, 3), (6, 3),
+(7, 4), (8, 4),
+(9, 5),
+(10, 6),
+(11, 7), (12, 7),
+(13, 8),
+(14, 9),
+(15, 10), (16, 10),
+(17, 11), (18, 11),
+(19, 12);
