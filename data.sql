@@ -1,96 +1,3 @@
-CREATE TABLE artists (
-    artist_id INT PRIMARY KEY,
-    artist_name VARCHAR(100),
-    genre VARCHAR(50),
-    debut_year INT
-);
-
-CREATE TABLE albums (
-    album_id INT PRIMARY KEY,
-    album_title VARCHAR(100),
-    release_date DATE
-);
-
-CREATE TABLE songs (
-    song_id INT PRIMARY KEY,
-    song_title VARCHAR(100),
-    length INT,
-    release_date DATE
-);
-
-CREATE TABLE artist_albums_link (
-    artist_id INT,
-    album_id INT,
-    PRIMARY KEY (artist_id, album_id),
-    FOREIGN KEY (artist_id) REFERENCES artists(artist_id),
-    FOREIGN KEY (album_id) REFERENCES albums(album_id)
-);
-
-CREATE TABLE artists_songs_link (
-    artist_id INT,
-    song_id INT,
-    PRIMARY KEY (artist_id, song_id),
-    FOREIGN KEY (artist_id) REFERENCES artists(artist_id),
-    FOREIGN KEY (song_id) REFERENCES songs(song_id)
-);
-
-CREATE TABLE concerts (
-    concert_id INT PRIMARY KEY,
-    concert_title VARCHAR(100),
-    location VARCHAR(100),
-    date_of_concert DATE
-);
-
-CREATE TABLE artist_concerts_link (
-    artist_id INT,
-    concert_id INT,
-    PRIMARY KEY (artist_id, concert_id),
-    FOREIGN KEY (artist_id) REFERENCES artists(artist_id),
-    FOREIGN KEY (concert_id) REFERENCES concerts(concert_id)
-);
-
-CREATE TABLE concerts_songs_link (
-    concert_id INT,
-    song_id INT,
-    order_performance INT,
-    PRIMARY KEY (concert_id, song_id),
-    FOREIGN KEY (concert_id) REFERENCES concerts(concert_id),
-    FOREIGN KEY (song_id) REFERENCES songs(song_id)
-);
-
-CREATE TABLE fans (
-    fan_id INT PRIMARY KEY,
-    fan_name VARCHAR(100),
-    fan_email VARCHAR(100),
-    age INT
-);
-
-CREATE TABLE fan_favorites (
-    fan_id INT,
-    artist_id INT,
-    PRIMARY KEY (fan_id, artist_id),
-    FOREIGN KEY (fan_id) REFERENCES fans(fan_id),
-    FOREIGN KEY (artist_id) REFERENCES artists(artist_id)
-);
-
-CREATE TABLE concerts_tickets (
-    ticket_id INT PRIMARY KEY,
-    concert_id INT,
-    purchase_date DATE,
-    ticket_price DECIMAL(10, 2),
-    seat_zone VARCHAR(50),
-    seat_number VARCHAR(50),
-    FOREIGN KEY (concert_id) REFERENCES concerts(concert_id)
-);
-
-CREATE TABLE fan_tickets_link (
-    fan_id INT,
-    ticket_id INT,
-    PRIMARY KEY (fan_id, ticket_id),
-    FOREIGN KEY (fan_id) REFERENCES fans(fan_id),
-    FOREIGN KEY (ticket_id) REFERENCES concerts_tickets(ticket_id)
-);
-
 INSERT INTO artists (artist_id, artist_name, genre, debut_year) 
 VALUES 
 (1, 'Avicii', 'EDM', 2008),
@@ -129,9 +36,24 @@ VALUES
 
 INSERT INTO artists_songs_link (artist_id, song_id) 
 VALUES 
-(1, 1), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9),
-(2, 11), (2, 12), (2, 13), (2, 14), (2, 15), (2, 16), (2, 17), (2, 18),
-(2, 19), (2, 20);
+(1, 1), 
+(1, 3), 
+(1, 4), 
+(1, 5), 
+(1, 6), 
+(1, 7), 
+(1, 8), 
+(1, 9),
+(2, 11), 
+(2, 12), 
+(2, 13), 
+(2, 14), 
+(2, 15), 
+(2, 16), 
+(2, 17), 
+(2, 18),
+(2, 19), 
+(2, 20);
 
 INSERT INTO concerts (concert_id, concert_title, location, date_of_concert)
 VALUES 
@@ -145,8 +67,16 @@ VALUES
 
 INSERT INTO concerts_songs_link (concert_id, song_id, order_performance)
 VALUES 
-(1, 1, 1), (1, 3, 2), (1, 4, 3), (1, 5, 4), (1, 6, 5),
-(2, 11, 1), (2, 12, 2), (2, 13, 3), (2, 14, 4), (2, 15, 5);
+(1, 1, 1), 
+(1, 3, 2), 
+(1, 4, 3), 
+(1, 5, 4), 
+(1, 6, 5),
+(2, 11, 1), 
+(2, 12, 2), 
+(2, 13, 3), 
+(2, 14, 4), 
+(2, 15, 5);
 
 INSERT INTO fans (fan_id, fan_name, fan_email, age)
 VALUES 
@@ -192,9 +122,21 @@ VALUES
 
 INSERT INTO fan_favorites (fan_id, artist_id)
 VALUES 
-(5, 1), (6, 2), (7, 1), (8, 2), (9, 1), (10, 2),
-(11, 1), (12, 2), (13, 1), (14, 2), (15, 1), 
-(16, 2), (17, 1), (18, 2), (19, 1);
+(5, 1), 
+(6, 2), 
+(7, 1), 
+(8, 2), 
+(9, 1), 
+(10, 2),
+(11, 1), 
+(12, 2), 
+(13, 1), 
+(14, 2), 
+(15, 1), 
+(16, 2), 
+(17, 1), 
+(18, 2), 
+(19, 1);
 
 INSERT INTO concerts_tickets (ticket_id, concert_id, purchase_date, ticket_price, seat_zone, seat_number)
 VALUES 
@@ -211,13 +153,18 @@ VALUES
 
 INSERT INTO fan_tickets_link (fan_id, ticket_id)
 VALUES 
-(5, 3), (6, 3),
-(7, 4), (8, 4),
+(5, 3), 
+(6, 3),
+(7, 4), 
+(8, 4),
 (9, 5),
 (10, 6),
-(11, 7), (12, 7),
+(11, 7), 
+(12, 7),
 (13, 8),
 (14, 9),
-(15, 10), (16, 10),
-(17, 11), (18, 11),
+(15, 10), 
+(16, 10),
+(17, 11), 
+(18, 11),
 (19, 12);
