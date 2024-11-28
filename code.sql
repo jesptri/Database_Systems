@@ -11,23 +11,8 @@ GROUP BY c.concert_title
 HAVING COUNT(total_places_sold > 1000)
 ORDER BY total_places_sold;
 
+
 -- 4. Write one BEFORE and one AFTER trigger for the modified schema. 
-
-DELIMITER //
-
-CREATE TRIGGER fan_age_check
-BEFORE INSERT ON fans
-FOR EACH ROW BEGIN
-	IF NEW.age < 0 THEN
-    	SIGNAL SQLSTATE '45000' # unhandled user-defined exception
-        SET MESSAGE_TEXT = 'Fans must be at least 0 years old';
-	END IF;
-END;
-
-//
-
-DELIMITER;
-
 
 DELIMITER //
 
@@ -39,22 +24,29 @@ BEGIN
     WHERE fan_id = OLD.fan_id;
     DELETE FROM fan_favorites 
     WHERE fan_id = OLD.fan_id;
-END;
-//
+END//
 
 DELIMITER ;
 
---After
 DELIMITER //
-CREATE TRIGGER after_ticket_update
-AFTER UPDATE ON concert_tickets
+
+CREATE TRIGGER notify_artiste_on_new_concert
+AFTER INSERT ON artist_concerts_link
 FOR EACH ROW
 BEGIN
-    UPDATE concert_tickets
-    SET last_modified = NOW()
-    WHERE id = NEW.id;
-END;
-//
+    DECLARE concert_date DATE;
+
+    SELECT date_of_concert
+    INTO concert_date
+    FROM concerts
+    WHERE concert_id = NEW.concert_id;
+
+    INSERT INTO notifications (artist_id, message, notification_date)
+    VALUES (NEW.artist_id, CONCAT('New concert scheduled on ', concert_date), NOW());
+END//
+
+DELIMITER ;
+
 
 -- 5. Write a stored function that returns the total number of occupied seats for a given concert_id.
 DELIMITER //
@@ -75,7 +67,6 @@ DELIMITER ;
 
 -- Example Use case
 SELECT total_nr_of_occupied_seats() AS total_occupied_seats;
-
 
 
 -- 6.  Write a stored procedure that checks whether a given song_id is associated with a given album_id. 
