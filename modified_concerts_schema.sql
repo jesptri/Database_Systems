@@ -27,6 +27,16 @@ CREATE TABLE songs (
     release_date DATE
 );
 
+-- Linking table albums and songs to support multiple albums per song
+
+CREATE TABLE songs_album_link (
+    song_id  INTEGER(10),
+    album_id  INTEGER(10),
+    PRIMARY KEY (song_id, album_id),
+    FOREIGN KEY (song_id) REFERENCES songs(song_id),
+    FOREIGN KEY (album_id) REFERENCES albums(album_id)
+);
+
 -- Linking table artists and songs to support multiple artists per song
 CREATE TABLE artists_songs_link (
     artist_id  INTEGER(10),
@@ -96,7 +106,3 @@ CREATE TABLE fan_tickets_link (
     FOREIGN KEY (fan_id) REFERENCES fans(fan_id),
     FOREIGN KEY (ticket_id) REFERENCES concerts_tickets(ticket_id)
 );
-
----------------------------------------------------------
--- /!\ Need to add a link between songs and albums /!\ --
----------------------------------------------------------
