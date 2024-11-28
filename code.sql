@@ -11,6 +11,7 @@ GROUP BY c.concert_title
 HAVING COUNT(total_places_sold > 1000)
 ORDER BY total_places_sold;
 
+
 -- 4. Write one BEFORE and one AFTER trigger for the modified schema. 
 
 DELIMITER //
@@ -46,17 +47,6 @@ END//
 
 DELIMITER ;
 
---After
-DELIMITER //
-CREATE TRIGGER after_ticket_update
-AFTER UPDATE ON concert_tickets
-FOR EACH ROW
-BEGIN
-    UPDATE concert_tickets
-    SET last_modified = NOW()
-    WHERE id = NEW.id;
-END;
-//
 
 -- 5. Write a stored function that returns the total number of occupied seats for a given concert_id.
 DELIMITER //
@@ -77,7 +67,6 @@ DELIMITER ;
 
 -- Example Use case
 SELECT total_nr_of_occupied_seats() AS total_occupied_seats;
-
 
 
 -- 6.  Write a stored procedure that checks whether a given song_id is associated with a given album_id. 
