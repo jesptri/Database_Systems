@@ -1,12 +1,11 @@
 -- 4. Write one BEFORE and one AFTER trigger for the modified schema. 
 
 
-CREATE TRIGGER fan_age_check
-BEFORE INSERT ON fans
+CREATE TRIGGER delete_link_on_fan_delete
+AFTER DELETE ON fans
 FOR EACH ROW BEGIN
-	IF NEW.age < 0 THEN
-    	SIGNAL SQLSTATE '45000' # unhandled user-defined exception
-        SET MESSAGE_TEXT = 'Fans must be at least 18 years old';
+	IF OLD.fan_id IN (SELECT fan_id FROM fan_tickets_link ) THEN
+    	DELETE FROM fan_tickets_link WHERE fan_id = OLD.fan_id;
 	END IF;
 END;
 

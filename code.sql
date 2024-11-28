@@ -46,7 +46,37 @@ END//
 
 DELIMITER ;
 
+--After
+DELIMITER //
+CREATE TRIGGER after_ticket_update
+AFTER UPDATE ON concert_tickets
+FOR EACH ROW
+BEGIN
+    UPDATE concert_tickets
+    SET last_modified = NOW()
+    WHERE id = NEW.id;
+END;
+//
+
 -- 5. Write a stored function that returns the total number of occupied seats for a given concert_id.
+DELIMITER //
+
+CREATE OR REPLACE FUNCTION total_nr_of_occupied_seats(id INT)
+RETURNS INT
+BEGIN
+    DECLARE seats INT;
+    
+    SELECT COUNT(ticket_id) INTO seats
+    FROM concerts_tickets
+    WHERE concert_id = id;
+    
+    RETURN seats;
+END//
+
+DELIMITER ;
+
+-- Example Use case
+SELECT total_nr_of_occupied_seats() AS total_occupied_seats;
 
 
 
