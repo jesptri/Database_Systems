@@ -97,6 +97,13 @@ CREATE TABLE fan_tickets_link (
     FOREIGN KEY (ticket_id) REFERENCES concerts_tickets(ticket_id)
 );
 
+-- New table for trigger
+CREATE TABLE notifications (
+    artist_id INTEGER(10), 
+    message VARCHAR(256), 
+    notification_date DATE
+);
+
 ---------------------------------------------------------
 -- /!\ Need to add a link between songs and albums /!\ --
 ---------------------------------------------------------

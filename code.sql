@@ -15,22 +15,6 @@ ORDER BY total_places_sold;
 
 DELIMITER //
 
-CREATE TRIGGER fan_age_check
-BEFORE INSERT ON fans
-FOR EACH ROW BEGIN
-	IF NEW.age < 0 THEN
-    	SIGNAL SQLSTATE '45000' # unhandled user-defined exception
-        SET MESSAGE_TEXT = 'Fans must be at least 0 years old';
-	END IF;
-END;
-
-//
-
-DELIMITER;
-
-
-DELIMITER //
-
 CREATE TRIGGER fan_deletion
 BEFORE DELETE ON fans
 FOR EACH ROW 
@@ -39,8 +23,26 @@ BEGIN
     WHERE fan_id = OLD.fan_id;
     DELETE FROM fan_favorites 
     WHERE fan_id = OLD.fan_id;
-END;
-//
+END//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE TRIGGER notify_artiste_on_new_concert
+AFTER INSERT ON artist_concerts_link
+FOR EACH ROW
+BEGIN
+    DECLARE concert_date DATE;
+
+    SELECT date_of_concert
+    INTO concert_date
+    FROM concerts
+    WHERE concert_id = NEW.concert_id;
+
+    INSERT INTO notifications (artist_id, message, notification_date)
+    VALUES (NEW.artist_id, CONCAT('New concert scheduled on ', concert_date), NOW());
+END//
 
 DELIMITER ;
 
