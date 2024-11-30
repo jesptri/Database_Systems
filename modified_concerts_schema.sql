@@ -1,3 +1,6 @@
+-- -------------------------------- --
+-- ARTISTS, ALBUMS AND SONGS TABLES --
+-- -------------------------------- --
 CREATE TABLE artists (
     artist_id  INTEGER(10) PRIMARY KEY,
     artist_name VARCHAR(128),
@@ -11,15 +14,6 @@ CREATE TABLE albums (
     release_date DATE
 );
 
--- Linking table artists and albums to support multiple artists per album
-CREATE TABLE artist_albums_link (
-    artist_id  INTEGER(10),
-    album_id  INTEGER(10),
-    PRIMARY KEY (artist_id, album_id),
-    FOREIGN KEY (artist_id) REFERENCES artists(artist_id),
-    FOREIGN KEY (album_id) REFERENCES albums(album_id)
-);
-
 CREATE TABLE songs (
     song_id  INTEGER(10) PRIMARY KEY,
     song_title VARCHAR(128),
@@ -27,24 +21,20 @@ CREATE TABLE songs (
     release_date DATE
 );
 
--- Linking table albums and songs to support multiple albums per song
-
-CREATE TABLE songs_album_link (
-    song_id  INTEGER(10),
-    album_id  INTEGER(10),
-    PRIMARY KEY (song_id, album_id),
-    FOREIGN KEY (song_id) REFERENCES songs(song_id),
-    FOREIGN KEY (album_id) REFERENCES albums(album_id)
-);
-
--- Linking table artists and songs to support multiple artists per song
-CREATE TABLE artists_songs_link (
+-- Linking tables artists, albums and songs to support multiple albums per song, multiple artist per song, multiple songs and albums per artist
+CREATE TABLE artist_album_song_link (
     artist_id  INTEGER(10),
+    album_id  INTEGER(10),
     song_id  INTEGER(10),
-    PRIMARY KEY (artist_id, song_id),
+    PRIMARY KEY (artist_id, album_id, song_id),
     FOREIGN KEY (artist_id) REFERENCES artists(artist_id),
+    FOREIGN KEY (album_id) REFERENCES albums(album_id),
     FOREIGN KEY (song_id) REFERENCES songs(song_id)
 );
+
+-- -------------- --
+-- CONCERTS TABLE --
+-- -------------- --
 
 CREATE TABLE concerts (
     concert_id  INTEGER(10) PRIMARY KEY,
@@ -69,8 +59,15 @@ CREATE TABLE concerts_songs_link (
     order_performance TINYINT(4),
     PRIMARY KEY (concert_id, song_id),
     FOREIGN KEY (concert_id) REFERENCES concerts(concert_id),
-    FOREIGN KEY (song_id) REFERENCES songs(song_id)
+    FOREIGN KEY (song_id) REFERENCES songs(song_id),
+    -- Adding a constraint to prevent two songs of a same concert to have the same order number
+    CONSTRAINT unique_order_performance UNIQUE (concert_id, order_performance)
 );
+
+
+-- --------- --
+-- FAN TABLE --
+-- --------- --
 
 CREATE TABLE fans (
     fan_id  INTEGER(10) PRIMARY KEY,
@@ -79,7 +76,7 @@ CREATE TABLE fans (
     age TINYINT(3)
 );
 
--- Favorite artists per table
+-- Favorite artists of each fan
 CREATE TABLE fan_favorites (
     fan_id  INTEGER(10),
     artist_id  INTEGER(10),
@@ -88,13 +85,15 @@ CREATE TABLE fan_favorites (
     FOREIGN KEY (artist_id) REFERENCES artists(artist_id)
 );
 
+
+-- ------------- --
+-- TICKETS TABLE --
+-- ------------- --
 CREATE TABLE concerts_tickets (
     ticket_id INTEGER(10) PRIMARY KEY,
     concert_id INTEGER(10),
     purchase_date DATE,
     ticket_price DOUBLE,
-    seat_zone VARCHAR(16),
-    seat_number VARCHAR(16),
     FOREIGN KEY (concert_id) REFERENCES concerts(concert_id)
 );
 
@@ -102,12 +101,18 @@ CREATE TABLE concerts_tickets (
 CREATE TABLE fan_tickets_link (
     fan_id INT,
     ticket_id INT,
+    seat_zone VARCHAR(16),
+    seat_number VARCHAR(16),
     PRIMARY KEY (fan_id, ticket_id),
     FOREIGN KEY (fan_id) REFERENCES fans(fan_id),
     FOREIGN KEY (ticket_id) REFERENCES concerts_tickets(ticket_id)
 );
 
--- New table for trigger
+
+-- ---------------------------------------- --
+--            NOTIFICATIONS TABLE           --
+-- For when an artist is added to a concert --
+-- ---------------------------------------- --
 CREATE TABLE notifications (
     artist_id INTEGER(10), 
     message VARCHAR(256), 

@@ -1,192 +1,141 @@
-INSERT INTO artists (artist_id, artist_name, genre, debut_year) 
-VALUES 
-(1, 'Avicii', 'EDM', 2008),
-(2, 'Bruce Springsteen', 'Rock', 1973);
+INSERT INTO artists (artist_id, artist_name, genre, debut_year) VALUES
+(1, 'The Beatles', 'Rock', 1960),
+(2, 'Adele', 'Pop', 2008),
+(3, 'Billie Eilish', 'Pop', 2015),
+(4, 'Ed Sheeran', 'Pop', 2011),
+(5, 'Nirvana', 'Grunge', 1987),
+(6, 'Drake', 'Hip Hop', 2006),
+(7, 'Taylor Swift', 'Country', 2006),
+(8, 'Kendrick Lamar', 'Hip Hop', 2010),
+(9, 'Elton John', 'Pop', 1962),
+(10, 'Beyoncé', 'Pop', 2003);
 
-INSERT INTO albums (album_id, album_title, release_date)
-VALUES 
-(1, 'True', '2013-09-13'),
-(2, 'Born in the U.S.A.', '1984-06-04');
+INSERT INTO albums (album_id, album_title, release_date) VALUES
+(1, 'Abbey Road', '1969-09-26'),
+(2, '21', '2011-01-24'),
+(3, 'When We All Fall Asleep, Where Do We Go?', '2019-03-29'),
+(4, 'Divide', '2017-03-03'),
+(5, 'Nevermind', '1991-09-24'),
+(6, 'Scorpion', '2018-06-29'),
+(7, 'Fearless', '2008-11-11'),
+(8, 'DAMN.', '2017-04-14'),
+(9, 'Goodbye Yellow Brick Road', '1973-10-05'),
+(10, 'Lemonade', '2016-04-23');
 
-INSERT INTO songs (song_id, song_title, length, release_date)
-VALUES 
-(1, 'Wake Me Up', 272, '2013-06-17'),
-(3, 'Hey Brother', 254, '2013-09-13'),
-(4, 'Addicted to You', 151, '2013-09-13'),
-(5, 'Dear Boy', 257, '2013-09-13'),
-(6, 'Liar Liar', 208, '2013-09-13'),
-(7, 'Shame on Me', 253, '2013-09-13'),
-(8, 'Lay Me Down', 262, '2013-09-13'),
-(9, 'Dancing in My Head', 239, '2013-09-13'),
-(11, 'Born in the U.S.A.', 282, '1984-05-04'),
-(12, 'Darlington County', 290, '1984-06-04'),
-(13, 'Working on the Highway', 192, '1984-06-04'),
-(14, 'I\'m on Fire', 158, '1984-06-04'),
-(15, 'No Surrender', 243, '1984-06-04'),
-(16, 'Bobby Jean', 270, '1984-06-04'),
-(17, 'I\'m Goin\' Down', 210, '1984-06-04'),
-(18, 'Glory Days', 257, '1984-06-04'),
-(19, 'Dancing in the Dark', 242, '1984-06-04'),
-(20, 'My Hometown', 273, '1984-06-04');
+INSERT INTO songs (song_id, song_title, length, release_date) VALUES
+(1, 'Come Together', 4.20, '1969-09-26'),
+(2, 'Rolling in the Deep', 3.48, '2011-01-24'),
+(3, 'Bad Guy', 3.14, '2019-03-29'),
+(4, 'Shape of You', 3.53, '2017-03-03'),
+(5, 'Smells Like Teen Spirit', 5.01, '1991-09-24'),
+(6, 'God’s Plan', 3.18, '2018-06-29'),
+(7, 'Love Story', 3.55, '2008-11-11'),
+(8, 'HUMBLE.', 2.57, '2017-04-14'),
+(9, 'Rocket Man', 4.41, '1973-10-05'),
+(10, 'Sorry', 3.50, '2016-04-23'),
+(11, 'Imagine', 3.15, '1971-10-11');  -- Song that belongs to 2 albums and created by 2 artists
 
-INSERT INTO artist_albums_link (artist_id, album_id) 
-VALUES 
+INSERT INTO artist_album_song_link (artist_id, album_id, song_id) VALUES
+(1, 1, 1),  -- The Beatles - Abbey Road - Come Together
+(1, 1, 11), -- The Beatles - Abbey Road - Imagine
+(2, 2, 2),  -- Adele - 21 - Rolling in the Deep
+(3, 3, 3),  -- Billie Eilish - When We All Fall Asleep - Bad Guy
+(4, 4, 4),  -- Ed Sheeran - Divide - Shape of You
+(5, 5, 5),  -- Nirvana - Nevermind - Smells Like Teen Spirit
+(6, 6, 6),  -- Drake - Scorpion - God’s Plan
+(7, 7, 7),  -- Taylor Swift - Fearless - Love Story
+(8, 8, 8),  -- Kendrick Lamar - DAMN. - HUMBLE.
+(9, 9, 9),  -- Elton John - Goodbye Yellow Brick Road - Rocket Man
+(10, 10, 10), -- Beyoncé - Lemonade - Sorry
+(1, 5, 11),  -- The Beatles - Nevermind - Imagine
+(6, 6, 11);  -- Drake - Scorpion - Imagine
+
+INSERT INTO concerts (concert_id, concert_title, location, date_of_concert) VALUES
+(1, 'The Beatles Live', 'London', '1969-08-08'),
+(2, 'Adele World Tour', 'New York', '2011-06-20'),
+(3, 'Billie Eilish: Happier Than Ever', 'Los Angeles', '2022-04-23'),
+(4, 'Ed Sheeran Concert', 'Manchester', '2018-05-24'),
+(5, 'Nirvana Reunion', 'Seattle', '2023-01-14'),
+(6, 'Drake Summer Jam', 'Miami', '2019-08-02'),
+(7, 'Taylor Swift 1989 Tour', 'Chicago', '2015-07-12'),
+(8, 'Kendrick Lamar Tour', 'Boston', '2018-10-06'),
+(9, 'Elton John Farewell Tour', 'Paris', '2021-11-02'),
+(10, 'Beyoncé On The Run II', 'Los Angeles', '2018-09-13'),
+(11, 'Empty Concert', 'Nowhere', '2024-01-01');
+
+INSERT INTO artist_concerts_link (artist_id, concert_id) VALUES
+(1, 1),  -- The Beatles - The Beatles Live
+(2, 2),  -- Adele - Adele World Tour
+(3, 3),  -- Billie Eilish - Billie Eilish: Happier Than Ever
+(4, 4),  -- Ed Sheeran - Ed Sheeran Concert
+(5, 5),  -- Nirvana - Nirvana Reunion
+(6, 6),  -- Drake - Drake Summer Jam
+(7, 7),  -- Taylor Swift - Taylor Swift 1989 Tour
+(8, 8),  -- Kendrick Lamar - Kendrick Lamar Tour
+(9, 9),  -- Elton John - Elton John Farewell Tour
+(10, 10),  -- Beyoncé - Beyoncé On The Run II
+(1, 5),  -- The Beatles - Nirvana Reunion
+(10, 5);  -- Beyoncé - Nirvana Reunion
+
+INSERT INTO concerts_songs_link (concert_id, song_id, order_performance) VALUES
+(1, 1, 1),  -- Concert The Beatles Live - Come Together
+(1, 11, 2), -- Concert The Beatles Live - Imagine
+(2, 2, 1),  -- Concert Adele World Tour - Rolling in the Deep
+(3, 3, 1),  -- Concert Billie Eilish - Bad Guy
+(4, 4, 1),  -- Concert Ed Sheeran - Shape of You
+(5, 5, 1),  -- Concert Nirvana Reunion - Smells Like Teen Spirit
+(6, 6, 1),  -- Concert Drake Summer Jam - God’s Plan
+(7, 7, 1),  -- Concert Taylor Swift 1989 - Love Story
+(8, 8, 1),  -- Concert Kendrick Lamar - HUMBLE.
+(9, 9, 1),  -- Concert Elton John Farewell - Rocket Man
+(10, 10, 1); -- Concert Beyoncé On The Run II - Sorry
+
+INSERT INTO fans (fan_id, fan_name, fan_email, age) VALUES
+(1, 'John Doe', 'johndoe@example.com', 25),
+(2, 'Jane Smith', 'janesmith@example.com', 30),
+(3, 'Alice Johnson', 'alicej@example.com', 22),
+(4, 'Bob Lee', 'boblee@example.com', 28),
+(5, 'Charlie Brown', 'charlieb@example.com', 35),
+(6, 'Emily White', 'emilyw@example.com', 24),
+(7, 'David Clark', 'davidc@example.com', 27),
+(8, 'Grace Adams', 'gracea@example.com', 21),
+(9, 'Hannah Wilson', 'hannahw@example.com', 26),
+(10, 'Ivy Scott', 'ivysc@example.com', 23);
+
+INSERT INTO fan_favorites (fan_id, artist_id) VALUES
 (1, 1),
-(2, 2);
-
-INSERT INTO artists_songs_link (artist_id, song_id) 
-VALUES 
-(1, 1), 
-(1, 3), 
-(1, 4), 
-(1, 5), 
-(1, 6), 
-(1, 7), 
-(1, 8), 
-(1, 9),
-(2, 11), 
-(2, 12), 
-(2, 13), 
-(2, 14), 
-(2, 15), 
-(2, 16), 
-(2, 17), 
-(2, 18),
-(2, 19), 
-(2, 20);
-
-INSERT INTO concerts (concert_id, concert_title, location, date_of_concert)
-VALUES 
-(1, 'Avicii World Tour', 'Miami, USA', '2014-07-10'),
-(2, 'Bruce Springsteen Concert', 'New York, USA', '1985-09-20');
-
-INSERT INTO artist_concerts_link (artist_id, concert_id) 
-VALUES
-(1, 1),
-(2, 2);
-
-INSERT INTO concerts_songs_link (concert_id, song_id, order_performance)
-VALUES 
-(1, 1, 1), 
-(1, 3, 2), 
-(1, 4, 3), 
-(1, 5, 4), 
-(1, 6, 5),
-(2, 11, 1), 
-(2, 12, 2), 
-(2, 13, 3), 
-(2, 14, 4), 
-(2, 15, 5);
-
-INSERT INTO fans (fan_id, fan_name, fan_email, age)
-VALUES 
-(1, 'Sean Murphy', 'sean.murphy@example.ie', 18),
-(2, 'Aoife O\'Brien', 'aoife.obrien@example.ie', 18),
-(3, 'Patrick Doyle', 'patrick.doyle@example.ie', 18),
-(4, 'Roisin Kelly', 'roisin.kelly@example.ie', 18);
-
-INSERT INTO fan_favorites (fan_id, artist_id)
-VALUES 
-(1, 1),
+(1, 2),
 (2, 2),
-(3, 1),
-(4, 2);
+(3, 3),
+(4, 4),
+(5, 5),
+(6, 6),
+(7, 7),
+(8, 8),
+(9, 9),
+(10, 10);
 
-INSERT INTO concerts_tickets (ticket_id, concert_id, purchase_date, ticket_price, seat_zone, seat_number)
-VALUES 
-(1, 1, '2014-06-15', 75.50, 'Section1', 'A12'),
-(2, 2, '1985-09-01', 80.00, 'Section3', 'C10');
+INSERT INTO concerts_tickets (ticket_id, concert_id, purchase_date, ticket_price) VALUES
+(1, 1, '1969-08-01', 50.00),
+(2, 2, '2011-06-15', 75.00),
+(3, 3, '2022-04-20', 100.00),
+(4, 4, '2018-05-15', 65.00),
+(5, 5, '2023-01-10', 80.00),
+(6, 6, '2019-07-28', 90.00),
+(7, 7, '2015-07-10', 60.00),
+(8, 8, '2018-10-01', 85.00),
+(9, 9, '2021-10-29', 120.00),
+(10, 9, '2018-09-10', 110.00);
 
-INSERT INTO fan_tickets_link (fan_id, ticket_id)
-VALUES 
-(1, 1),
-(2, 2);
-
-INSERT INTO fans (fan_id, fan_name, fan_email, age)
-VALUES 
-(5, 'John Doe', 'john.doe@example.com', 25),
-(6, 'Jane Smith', 'jane.smith@example.com', 22),
-(7, 'Emily Clark', 'emily.clark@example.com', 30),
-(8, 'James Johnson', 'james.johnson@example.com', 28),
-(9, 'Alice Brown', 'alice.brown@example.com', 26),
-(10, 'David Wilson', 'david.wilson@example.com', 24),
-(11, 'Chris Lee', 'chris.lee@example.com', 21),
-(12, 'Michael Green', 'michael.green@example.com', 33),
-(13, 'Sarah Adams', 'sarah.adams@example.com', 27),
-(14, 'Tom Harris', 'tom.harris@example.com', 35),
-(15, 'Kate Miller', 'kate.miller@example.com', 23),
-(16, 'Laura Lewis', 'laura.lewis@example.com', 29),
-(17, 'Mark Walker', 'mark.walker@example.com', 32),
-(18, 'Paul Young', 'paul.young@example.com', 20),
-(19, 'Sophie King', 'sophie.king@example.com', 31);
-
-INSERT INTO fan_favorites (fan_id, artist_id)
-VALUES 
-(5, 1), 
-(6, 2), 
-(7, 1), 
-(8, 2), 
-(9, 1), 
-(10, 2),
-(11, 1), 
-(12, 2), 
-(13, 1), 
-(14, 2), 
-(15, 1), 
-(16, 2), 
-(17, 1), 
-(18, 2), 
-(19, 1);
-
-INSERT INTO concerts_tickets (ticket_id, concert_id, purchase_date, ticket_price, seat_zone, seat_number)
-VALUES 
-(3, 1, '2014-06-20', 75.50, 'Section1', 'A13'),
-(4, 1, '2014-06-25', 75.50, 'Section1', 'A14'),
-(5, 1, '2014-07-01', 75.50, 'Section2', 'B10'),
-(6, 2, '1985-09-05', 80.00, 'Section2', 'B12'),
-(7, 2, '1985-09-10', 80.00, 'Section3', 'C11'),
-(8, 2, '1985-09-15', 80.00, 'Section1', 'A11'),
-(9, 1, '2014-07-05', 75.50, 'Section2', 'B13'),
-(10, 1, '2014-07-08', 75.50, 'Section3', 'C12'),
-(11, 2, '1985-09-18', 80.00, 'Section3', 'C13'),
-(12, 2, '1985-09-20', 80.00, 'Section2', 'B14');
-
-INSERT INTO fan_tickets_link (fan_id, ticket_id)
-VALUES 
-(5, 3), 
-(6, 3),
-(7, 4), 
-(8, 4),
-(9, 5),
-(10, 6),
-(11, 7), 
-(12, 7),
-(13, 8),
-(14, 9),
-(15, 10), 
-(16, 10),
-(17, 11), 
-(18, 11),
-(19, 12);
-
-INSERT INTO songs_album_link (song_id, album_id)
-VALUES
-(1, 1),
-(3, 1),
-(4, 1),
-(5, 1),
-(6, 1),
-(7, 1),
-(8, 1),
-(9, 1),
-(11, 2),
-(12, 2),
-(13, 2),
-(14, 2),
-(15, 2),
-(16, 2),
-(17, 2),
-(18, 2),
-(19, 2),
-(20, 2);
-
+INSERT INTO fan_tickets_link (fan_id, ticket_id, seat_zone, seat_number) VALUES
+(1, 1, 'VIP', 'A1'),
+(2, 2, 'General', 'B2'),
+(3, 3, 'VIP', 'C3'),
+(4, 4, 'General', 'D4'),
+(5, 5, 'VIP', 'E5'),
+(6, 6, 'General', 'F6'),
+(7, 7, 'VIP', 'G7'),
+(8, 8, 'General', 'H8'),
+(9, 9, 'VIP', 'I9'),
+(10, 9, 'General', 'J10'),
+(10, 10, 'General', 'K11');
