@@ -56,9 +56,12 @@ RETURNS INT
 BEGIN
     DECLARE seats INT;
     
-    SELECT COUNT(ticket_id) INTO seats
-    FROM concerts_tickets
-    WHERE concert_id = id;
+    SELECT COUNT(fan_id) INTO seats
+    FROM (
+        SELECT fan_id 
+        FROM concerts_tickets NATURAL JOIN fan_tickets_link
+        WHERE concert_id = id
+    ) AS F;
     
     RETURN seats;
 END//
@@ -66,7 +69,7 @@ END//
 DELIMITER ;
 
 -- Example Use case
-SELECT total_nr_of_occupied_seats() AS total_occupied_seats;
+SELECT total_nr_of_occupied_seats(9) AS total_occupied_seats;
 
 
 -- 6.  Write a stored procedure that checks whether a given song_id is associated with a given album_id. 
