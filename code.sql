@@ -30,7 +30,7 @@ DELIMITER ;
 
 DELIMITER //
 
-CREATE TRIGGER notify_artiste_on_new_concert
+CREATE TRIGGER notify_artist_on_new_concert
 AFTER INSERT ON artist_concerts_link
 FOR EACH ROW
 BEGIN
@@ -72,3 +72,37 @@ SELECT total_nr_of_occupied_seats() AS total_occupied_seats;
 -- 6.  Write a stored procedure that checks whether a given song_id is associated with a given album_id. 
 --      If not, insert this association into the database. 
 --      Additionally, adjust the song’s release date if it is later than the album’s.
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE add_song_album_link(IN song_id_in INTEGER(10), IN album_id_in INTEGER(10))
+MODIFIES SQL DATA
+BEGIN
+	
+  DECLARE release_date_song DATE;
+  DECLARE release_date_album DATE;
+  
+  START TRANSACTION;
+  
+  IF NOT (song_id_in IN (SELECT song_id FROM songs_album_link) AND album_id_in IN (SELECT album_id FROM songs_album_link)) THEN
+    INSERT INTO songs_album_link
+        VALUES (song_id_in, album_id_in);
+  END IF;
+
+    
+
+    SELECT release_date INTO release_date_song FROM songs WHERE song_id = song_id_in;
+
+    SELECT release_date INTO release_date_album FROM albums WHERE album_id = album_id_in;
+
+    IF release_date_song > release_date_album THEN
+        UPDATE songs
+        SET release_date = release_date_album
+        WHERE song_id = song_id_in;
+    END IF;
+    
+  END IF;
+  
+  COMMIT;
+  
+END;
+//

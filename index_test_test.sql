@@ -1,0 +1,1 @@
+SELECT seat_number FROM concerts_tickets
