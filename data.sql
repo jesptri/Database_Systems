@@ -74,7 +74,7 @@ INSERT INTO artist_concerts_link (artist_id, concert_id) VALUES
 (8, 8),  -- Kendrick Lamar - Kendrick Lamar Tour
 (9, 9),  -- Elton John - Elton John Farewell Tour
 (10, 10),  -- Beyoncé - Beyoncé On The Run II
-(1, 5),  -- The Beatles - Nirvana Reunion (exemple concert avec deux artistes)
+(1, 5),  -- The Beatles - Nirvana Reunion
 (10, 5);  -- Beyoncé - Nirvana Reunion
 
 INSERT INTO concerts_songs_link (concert_id, song_id, order_performance) VALUES
@@ -88,7 +88,7 @@ INSERT INTO concerts_songs_link (concert_id, song_id, order_performance) VALUES
 (7, 7, 1),  -- Concert Taylor Swift 1989 - Love Story
 (8, 8, 1),  -- Concert Kendrick Lamar - HUMBLE.
 (9, 9, 1),  -- Concert Elton John Farewell - Rocket Man
-(10, 10, 1), -- Concert Beyoncé On The Run II - Sorry
+(10, 10, 1); -- Concert Beyoncé On The Run II - Sorry
 
 INSERT INTO fans (fan_id, fan_name, fan_email, age) VALUES
 (1, 'John Doe', 'johndoe@example.com', 25),
