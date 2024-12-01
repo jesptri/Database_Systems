@@ -1,6 +1,6 @@
 -- 3. Create a view for the modified schema. The view must use a join and both GROUP BY and HAVING clauses. Aim at demonstrating advanced SQL skills.
 
-CREATE VIEW concerts_over_one_places_summary AS
+CREATE VIEW concerts_over_one_place_summary AS
 SELECT c.concert_title, COUNT(csl.song_id) AS total_songs_performed, SUM(s.length) AS total_time, COUNT(DISTINCT ct.ticket_id) AS total_places_sold
 FROM concerts AS c
 JOIN artist_concerts_link AS acl ON c.concert_id = acl.concert_id
