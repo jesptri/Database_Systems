@@ -81,20 +81,20 @@ CREATE OR REPLACE PROCEDURE add_song_album_link(IN song_id_in INTEGER(10), IN al
 MODIFIES SQL DATA
 BEGIN
 	
-  DECLARE release_date_song DATE;
-  DECLARE release_date_album DATE;
-  
-  START TRANSACTION;
-  
-  IF NOT (song_id_in IN (SELECT song_id FROM songs_album_link) AND album_id_in IN (SELECT album_id FROM songs_album_link)) THEN
-    INSERT INTO songs_album_link
-        VALUES (song_id_in, album_id_in);
-  END IF;
+    DECLARE release_date_song DATE;
+    DECLARE release_date_album DATE;
+    DECLARE artist_id_in INTEGER(10);
 
-    
+    START TRANSACTION;
+
+    SELECT artist_id INTO artist_id_in FROM artist_album_song_link WHERE song_id = song_id_in LIMIT 1;
+
+    IF NOT EXISTS (SELECT 1 FROM artist_album_song_link WHERE artist_id = artist_id_in AND album_id = album_id_in AND song_id = song_id_in) THEN
+        INSERT INTO artist_album_song_link (artist_id, album_id, song_id) 
+        VALUES (artist_id_in, album_id_in, song_id_in);
+    END IF;
 
     SELECT release_date INTO release_date_song FROM songs WHERE song_id = song_id_in;
-
     SELECT release_date INTO release_date_album FROM albums WHERE album_id = album_id_in;
 
     IF release_date_song > release_date_album THEN
@@ -102,10 +102,11 @@ BEGIN
         SET release_date = release_date_album
         WHERE song_id = song_id_in;
     END IF;
-    
-  END IF;
-  
-  COMMIT;
+
+    COMMIT;
   
 END;
 //
+
+-- Example Use case
+CALL add_song_album_link(11,2);
