@@ -116,5 +116,6 @@ CREATE TABLE fan_tickets_link (
 CREATE TABLE notifications (
     artist_id INTEGER(10), 
     message VARCHAR(256), 
-    notification_date DATE
+    notification_date DATE,
+    FOREIGN KEY (artist_id) REFERENCES artists(artist_id)
 );
