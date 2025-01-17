@@ -1,1 +1,0 @@
-DROP TRIGGER delete_link_on_fan_delete;
