@@ -49,6 +49,7 @@ DELIMITER ;
 
 
 -- 5. Write a stored function that returns the total number of occupied seats for a given concert_id.
+
 DELIMITER //
 
 CREATE OR REPLACE FUNCTION total_nr_of_occupied_seats(id INT)
@@ -109,4 +110,5 @@ END;
 //
 
 -- Example Use case
+	
 CALL add_song_album_link(11,2);
